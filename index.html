@@ -44,7 +44,9 @@
     <div class="row">
       <div class="col-md-12">
         <div class="jumbotron">
-          <h1 class="display-4" id="current_time">Hello, world!</h1>
+          <h1 class="display-4" id="hour"></h1>
+          <h1 class="display-4" id="middle" >:</h1>
+          <h1 class="display-4" id="minute"></h1>
         </div>
       </div>
     </div>
@@ -52,11 +54,21 @@
       <div class="col-md-12" id="table-container">
 
         <table id="list" class="table">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Train</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Frequency</th>
+                <th scope="col">Time</th>
+                <th scope="col">ETA</th>
+                <th scope="col"></th>
+              </tr>
         </table>
-
+        
 
       </div>
     </div>
+
     <div class="row" id="new_entry">
       <div class="col-md-12"id="new_entry_box" >
 

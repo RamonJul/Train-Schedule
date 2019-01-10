@@ -34,20 +34,27 @@ body{
 #Log-out{
     display: none;
 }
-.display-4{
-    text-align: center;
-    font-weight: 600;
-    font-size: 10rem;
-}
+
 
 .container{
     display: none;
     /* background-color:#14E703;    */
 }
+.display-4{
+    text-align: center;
+    font-weight: 600;
+    font-size: 10rem;
+}
+.semi_colon{
+    opacity: 0;
+}
 .jumbotron{
     -webkit-box-shadow: 16px 15px 20px -1px rgba(90,255,8,1);
     -moz-box-shadow: 16px 15px 20px -1px rgba(90,255,8,1);
     box-shadow: 16px 15px 20px -1px rgba(90,255,8,1);
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
 }
 
 #table, #new_entry{

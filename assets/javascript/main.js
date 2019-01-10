@@ -16,16 +16,23 @@ var config = {
   };
   firebase.initializeApp(config);
 var database = firebase.database();
-var now = moment()//initial time when could runs
-var now_time = moment(now.hour() + ":" + now.minutes(), "HH:mm", true)
-var now = moment()//initial time when could runs
-if(now.minutes()<10){
-    var now_time = moment(now.hour() + ":0" +now.minutes(), "HH:mm", true)
+var now_time=time_set(moment())//initial time when could runs
+
+
+function time_set(now){
+    if(now.minutes()<10){
+        var now_time = moment(now.hour() + ":0" +now.minutes(), "HH:mm", true)
+        document.getElementById("hour").textContent=now.hour() 
+        document.getElementById("minute").textContent=("0"+now.minutes())
+    }
+    else{
+    var now_time = moment(now.hour() + ":" + now.minutes(), "HH:mm", true)
+    document.getElementById("hour").textContent=now.hour() 
+    document.getElementById("minute").textContent=now.minutes()
+    }
+    return now_time;
 }
-else{
-var now_time = moment(now.hour() + ":" + now.minutes(), "HH:mm", true)
-}
-document.getElementById("current_time").textContent=now_time.format("HH:mm")
+
 
 
 
@@ -67,45 +74,6 @@ database.ref("/train").on("child_changed", function (snapshot) {
     document.getElementById("list").removeChild(document.getElementById(key))
     display(snapshot)
 })
-
-
-function table_headers() {
-    var row = document.createElement("tr");
-    var empty = document.createElement("th");
-    row.appendChild(empty)
-
-    var train = document.createElement("th");
-    train.setAttribute("scope", "col")
-    train.textContent = "Train"
-    row.appendChild(train)
-
-    var destination = document.createElement("th");
-    destination.setAttribute("scope", "col")
-    destination.textContent = "Destination"
-    row.appendChild(destination)
-
-    var frequency = document.createElement("th");
-    frequency.setAttribute("scope", "col")
-    frequency.textContent = "Frequency"
-    row.appendChild(frequency)
-
-    var time = document.createElement("th");
-    time.setAttribute("scope", "col")
-    time.textContent = "Time"
-    row.appendChild(time)
-
-    var ETA = document.createElement("th");
-    ETA.setAttribute("scope", "col")
-    ETA.textContent = "ETA"
-    row.appendChild(ETA)
-
-    var empty_2 = document.createElement("th");
-    row.appendChild(empty_2)
-
-    document.getElementById("list").appendChild(row);
-
-
-}
 
 function display(snapshot) {
   
@@ -174,18 +142,11 @@ intervalId=setInterval(function(){
     system_time: internal_time
 
     })
-    // console.log(internal_time)
+  
     if(internal_time%1000===0){
     // every second
-    var current_now=moment()
-    if(current_now.minutes()<10){
-        var  current_now_time= moment(current_now.hour() + ":0" +current_now.minutes(), "HH:mm", true)
-    }
-    else{
-        var current_now_time=moment(current_now.hour() + ":" + current_now.minutes(), "HH:mm", true)
-    }
-    document.getElementById("current_time").textContent=current_now_time.format("HH:mm")
-    console.log(Math.abs(current_now_time.diff(now_time,"minutes")))
+    document.getElementById("middle").classList.toggle("semi_colon")
+    var current_now_time=time_set(moment())
     
     if(Math.abs(current_now_time.diff(now_time,"minutes"))>0){
         
@@ -206,11 +167,9 @@ intervalId=setInterval(function(){
                 arrival[i].textContent=frequency
                 arrival[i].previousSibling.textContent=new_time
                 database.ref("/train/"+key).update({
-
                     arrival:new_time,
-                    eta:frequency
                 })
-                //moment stuff    
+    
 
             }
 
@@ -329,4 +288,3 @@ document.getElementById("Log-out").addEventListener("click", function () {
 
 
 })
-table_headers()
